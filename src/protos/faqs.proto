@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package faqs;
+
+service FaqsService {
+    rpc GetFaq(GetFaqRequest) returns (GetFaqResponse) {}
+}
+
+message GetFaqRequest {
+    int32 id = 1;
+}
+
+message GetFaqResponse {
+    int32 id = 1;
+    string question = 2;
+    string answer = 3;
+}
