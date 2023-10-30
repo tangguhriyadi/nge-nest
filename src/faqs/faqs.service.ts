@@ -1,20 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFaqDto } from './dto/create-faq.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
-import {EntityManager} from 'typeorm'
+import { EntityManager } from 'typeorm';
 import { Faqs } from './entities/faq.entity';
 
 @Injectable()
 export class FaqsService {
-
-  constructor(private readonly entityManager:EntityManager ){}
+  constructor(private readonly entityManager: EntityManager) {}
 
   async create(createFaqDto: CreateFaqDto) {
+    const faq = new Faqs(createFaqDto);
 
-    const faq = new Faqs(createFaqDto)
+    await this.entityManager.save(faq);
 
-    await this.entityManager.save(faq)
-    
     return 'This action adds a new faq';
   }
 
@@ -23,8 +21,8 @@ export class FaqsService {
   }
 
   async findOne(id: number) {
-    const data = await this.entityManager.findOneBy(Faqs,{id})
-    return data
+    const data = await this.entityManager.findOneBy(Faqs, { id });
+    return data;
     // return `This action returns a #${id} faq`;
   }
 
